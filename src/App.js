@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Camera, Calendar, Heart, Smile, Meh, Frown, Plus, X, Bell, Flame, ChevronLeft, ChevronRight, Cat } from 'lucide-react';
-
+/* eslint-disable react-hooks/exhaustive-deps */
 export default function PhotoJournal() {
   const [entries, setEntries] = useState([]);
   const [showNewEntry, setShowNewEntry] = useState(false);
