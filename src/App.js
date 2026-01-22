@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Camera, Calendar, Heart, Smile, Meh, Frown, Plus, X, Bell, Flame, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Camera, Calendar, Heart, Smile, Meh, Frown, Plus, X, Bell, Flame, ChevronLeft, ChevronRight, Cat } from 'lucide-react';
 
 export default function PhotoJournal() {
   const [entries, setEntries] = useState([]);
@@ -169,10 +169,10 @@ export default function PhotoJournal() {
 
   const getMoodIcon = (mood) => {
     switch(mood) {
-      case 'happy': return <Smile className="w-5 h-5 text-gray-300" />;
-      case 'sad': return <Frown className="w-5 h-5 text-gray-400" />;
-      case 'love': return <Heart className="w-5 h-5 text-gray-300" />;
-      default: return <Meh className="w-5 h-5 text-gray-500" />;
+      case 'happy': return <Smile className="w-5 h-5 text-gray-700" />;
+      case 'sad': return <Frown className="w-5 h-5 text-gray-600" />;
+      case 'love': return <Heart className="w-5 h-5 text-gray-700" />;
+      default: return <Meh className="w-5 h-5 text-gray-600" />;
     }
   };
 
@@ -230,11 +230,11 @@ export default function PhotoJournal() {
       days.push(
         <div
           key={day}
-          className={`aspect-square border border-gray-700 p-2 transition-all duration-300 hover:scale-105 ${
-            isToday ? 'bg-gray-800 border-gray-500' : 'bg-gray-900'
-          } ${hasEntries ? 'cursor-pointer hover:bg-gray-800' : ''}`}
+          className={`aspect-square border border-gray-400 p-2 transition-all duration-300 hover:scale-105 hover:bg-white hover:border-black ${
+            isToday ? 'bg-gray-300 border-black' : 'bg-gray-200'
+          } ${hasEntries ? 'cursor-pointer' : ''}`}
         >
-          <div className="text-sm font-semibold text-gray-300 mb-1">{day}</div>
+          <div className="text-sm font-semibold text-black mb-1">{day}</div>
           {hasEntries && (
             <div className="grid grid-cols-2 gap-1">
               {dayEntries.slice(0, 4).map((entry, idx) => (
@@ -243,17 +243,17 @@ export default function PhotoJournal() {
                     <img
                       src={entry.photo}
                       alt={entry.title}
-                      className="w-full h-12 object-cover rounded border border-gray-600"
+                      className="w-full h-12 object-cover rounded border border-gray-500"
                     />
                   ) : (
-                    <div className="w-full h-12 bg-gradient-to-br from-gray-700 to-gray-800 rounded flex items-center justify-center border border-gray-600">
+                    <div className="w-full h-12 bg-gradient-to-br from-gray-300 to-gray-400 rounded flex items-center justify-center border border-gray-500">
                       {getMoodIcon(entry.mood)}
                     </div>
                   )}
                 </div>
               ))}
               {dayEntries.length > 4 && (
-                <div className="w-full h-12 bg-gray-800 rounded flex items-center justify-center text-xs text-gray-400 border border-gray-700">
+                <div className="w-full h-12 bg-gray-300 rounded flex items-center justify-center text-xs text-gray-700 border border-gray-500">
                   +{dayEntries.length - 4}
                 </div>
               )}
@@ -266,18 +266,18 @@ export default function PhotoJournal() {
     return (
       <div>
         <div className="flex justify-between items-center mb-6">
-          <button onClick={previousMonth} className="p-2 hover:bg-gray-800 rounded-lg transition-all duration-200 transform hover:scale-110">
-            <ChevronLeft className="w-6 h-6 text-gray-300" />
+          <button onClick={previousMonth} className="p-2 hover:bg-white rounded-lg transition-all duration-200 transform hover:scale-110">
+            <ChevronLeft className="w-6 h-6 text-black" />
           </button>
-          <h2 className="text-2xl font-semibold text-white">{monthName}</h2>
-          <button onClick={nextMonth} className="p-2 hover:bg-gray-800 rounded-lg transition-all duration-200 transform hover:scale-110">
-            <ChevronRight className="w-6 h-6 text-gray-300" />
+          <h2 className="text-2xl font-semibold text-black">{monthName}</h2>
+          <button onClick={nextMonth} className="p-2 hover:bg-white rounded-lg transition-all duration-200 transform hover:scale-110">
+            <ChevronRight className="w-6 h-6 text-black" />
           </button>
         </div>
         
         <div className="grid grid-cols-7 gap-2 mb-2">
           {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-            <div key={day} className="text-center text-sm font-semibold text-gray-400 py-2">
+            <div key={day} className="text-center text-sm font-semibold text-gray-700 py-2">
               {day}
             </div>
           ))}
@@ -291,7 +291,7 @@ export default function PhotoJournal() {
   };
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-gradient-to-br from-gray-300 via-gray-400 to-gray-300">
       <style>{`
         @keyframes fadeIn {
           from { opacity: 0; transform: translateY(20px); }
@@ -301,32 +301,39 @@ export default function PhotoJournal() {
           from { transform: translateX(-100%); opacity: 0; }
           to { transform: translateX(0); opacity: 1; }
         }
-        @keyframes pulse {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.7; }
+        @keyframes float {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-10px); }
         }
         .fade-in { animation: fadeIn 0.5s ease-out; }
         .slide-in { animation: slideIn 0.4s ease-out; }
+        .float { animation: float 3s ease-in-out infinite; }
       `}</style>
       
       <div className="max-w-6xl mx-auto p-6">
         <header className="mb-8 fade-in">
-          <div className="flex justify-between items-start mb-4">
-            <div>
-              <h1 className="text-5xl font-bold text-white mb-2 tracking-tight">My Journal</h1>
-              <p className="text-gray-400">Capture your moments, one entry at a time</p>
+          <div className="flex items-center gap-4 mb-6">
+            <div className="bg-black p-3 rounded-full float">
+              <Cat className="w-8 h-8 text-white" />
             </div>
+            <div>
+              <h1 className="text-5xl font-bold text-black mb-1 tracking-tight">My Journal</h1>
+              <p className="text-gray-700">Capture your moments, one entry at a time</p>
+            </div>
+          </div>
+          
+          <div className="flex justify-between items-start mb-4">
             <div className="flex gap-3">
-              <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-gray-800 to-gray-900 rounded-lg border border-gray-700 transform transition-all duration-300 hover:scale-105">
-                <Flame className="w-5 h-5 text-orange-400" />
-                <span className="font-semibold text-white">{streak} day{streak !== 1 ? 's' : ''}</span>
+              <div className="flex items-center gap-2 px-4 py-2 bg-black rounded-lg transform transition-all duration-300 hover:scale-105 hover:bg-white border-2 border-black group">
+                <Flame className="w-5 h-5 text-white group-hover:text-black transition-colors duration-300" />
+                <span className="font-semibold text-white group-hover:text-black transition-colors duration-300">{streak} day{streak !== 1 ? 's' : ''}</span>
               </div>
               <button
                 onClick={requestNotificationPermission}
-                className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-gray-800 to-gray-900 rounded-lg border border-gray-700 hover:border-gray-600 transition-all duration-300 text-sm transform hover:scale-105"
+                className="flex items-center gap-2 px-4 py-2 bg-black rounded-lg hover:bg-white border-2 border-black transition-all duration-300 text-sm transform hover:scale-105 group"
               >
-                <Bell className="w-4 h-4 text-gray-300" />
-                <span className="text-gray-300">{Notification.permission === 'granted' ? 'Notifications On' : 'Enable Reminders'}</span>
+                <Bell className="w-4 h-4 text-white group-hover:text-black transition-colors duration-300" />
+                <span className="text-white group-hover:text-black transition-colors duration-300">{Notification.permission === 'granted' ? 'Notifications On' : 'Enable Reminders'}</span>
               </button>
             </div>
           </div>
@@ -334,20 +341,20 @@ export default function PhotoJournal() {
           <div className="flex gap-2">
             <button
               onClick={() => setView('timeline')}
-              className={`px-6 py-2 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 ${
+              className={`px-6 py-2 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 border-2 border-black ${
                 view === 'timeline'
-                  ? 'bg-white text-black'
-                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700 border border-gray-700'
+                  ? 'bg-black text-white'
+                  : 'bg-transparent text-black hover:bg-white'
               }`}
             >
               Timeline
             </button>
             <button
               onClick={() => setView('calendar')}
-              className={`px-6 py-2 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 ${
+              className={`px-6 py-2 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 border-2 border-black ${
                 view === 'calendar'
-                  ? 'bg-white text-black'
-                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700 border border-gray-700'
+                  ? 'bg-black text-white'
+                  : 'bg-transparent text-black hover:bg-white'
               }`}
             >
               Calendar
@@ -360,7 +367,7 @@ export default function PhotoJournal() {
             {!showNewEntry && (
               <button
                 onClick={() => setShowNewEntry(true)}
-                className="w-full bg-white text-black py-4 rounded-lg mb-8 flex items-center justify-center gap-2 hover:bg-gray-200 transition-all duration-300 font-semibold transform hover:scale-[1.02] fade-in"
+                className="w-full bg-black text-white py-4 rounded-lg mb-8 flex items-center justify-center gap-2 hover:bg-white hover:text-black border-2 border-black transition-all duration-300 font-semibold transform hover:scale-[1.02] fade-in"
               >
                 <Plus className="w-5 h-5" />
                 New Entry
@@ -368,10 +375,10 @@ export default function PhotoJournal() {
             )}
 
             {showNewEntry && (
-              <div className="bg-gradient-to-br from-gray-900 to-black rounded-lg border border-gray-800 p-6 mb-8 slide-in">
+              <div className="bg-gray-200 rounded-lg border-2 border-black p-6 mb-8 slide-in hover:bg-white transition-all duration-300">
                 <div className="flex justify-between items-center mb-4">
-                  <h2 className="text-2xl font-semibold text-white">New Entry</h2>
-                  <button onClick={() => setShowNewEntry(false)} className="text-gray-500 hover:text-gray-300 transition-colors duration-200 transform hover:scale-110">
+                  <h2 className="text-2xl font-semibold text-black">New Entry</h2>
+                  <button onClick={() => setShowNewEntry(false)} className="text-gray-600 hover:text-black transition-colors duration-200 transform hover:scale-110">
                     <X className="w-6 h-6" />
                   </button>
                 </div>
@@ -381,27 +388,27 @@ export default function PhotoJournal() {
                   placeholder="Give your entry a title..."
                   value={newEntry.title}
                   onChange={(e) => setNewEntry({...newEntry, title: e.target.value})}
-                  className="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg mb-4 text-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-gray-500 focus:border-transparent transition-all duration-200"
+                  className="w-full p-3 bg-white border-2 border-black rounded-lg mb-4 text-lg text-black placeholder-gray-500 focus:ring-2 focus:ring-black transition-all duration-200"
                 />
 
                 <textarea
                   placeholder="What's on your mind today?"
                   value={newEntry.content}
                   onChange={(e) => setNewEntry({...newEntry, content: e.target.value})}
-                  className="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg mb-4 h-32 text-white placeholder-gray-500 focus:ring-2 focus:ring-gray-500 focus:border-transparent transition-all duration-200"
+                  className="w-full p-3 bg-white border-2 border-black rounded-lg mb-4 h-32 text-black placeholder-gray-500 focus:ring-2 focus:ring-black transition-all duration-200"
                 />
 
                 <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-400 mb-2">How are you feeling?</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">How are you feeling?</label>
                   <div className="flex gap-4">
                     {['happy', 'neutral', 'sad', 'love'].map((mood) => (
                       <button
                         key={mood}
                         onClick={() => setNewEntry({...newEntry, mood})}
-                        className={`p-3 rounded-lg border-2 transition-all duration-200 transform hover:scale-110 ${
+                        className={`p-3 rounded-lg border-2 border-black transition-all duration-200 transform hover:scale-110 ${
                           newEntry.mood === mood 
-                            ? 'border-white bg-gray-800' 
-                            : 'border-gray-700 hover:border-gray-600 bg-gray-900'
+                            ? 'bg-black' 
+                            : 'bg-white hover:bg-gray-100'
                         }`}
                       >
                         {getMoodIcon(mood)}
@@ -411,7 +418,7 @@ export default function PhotoJournal() {
                 </div>
 
                 <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-400 mb-2">Add a photo</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Add a photo</label>
                   <input
                     type="file"
                     accept="image/*"
@@ -421,19 +428,19 @@ export default function PhotoJournal() {
                   />
                   <label
                     htmlFor="photo-upload"
-                    className="flex items-center justify-center gap-2 p-4 border-2 border-dashed border-gray-700 rounded-lg cursor-pointer hover:border-gray-600 transition-all duration-200 bg-gray-900 hover:bg-gray-800"
+                    className="flex items-center justify-center gap-2 p-4 border-2 border-dashed border-black rounded-lg cursor-pointer hover:bg-white transition-all duration-200 bg-gray-100"
                   >
-                    <Camera className="w-5 h-5 text-gray-400" />
-                    <span className="text-gray-400">Choose a photo</span>
+                    <Camera className="w-5 h-5 text-black" />
+                    <span className="text-black">Choose a photo</span>
                   </label>
                   {newEntry.photoPreview && (
-                    <img src={newEntry.photoPreview} alt="Preview" className="mt-4 rounded-lg max-h-64 object-cover border border-gray-700 fade-in" />
+                    <img src={newEntry.photoPreview} alt="Preview" className="mt-4 rounded-lg max-h-64 object-cover border-2 border-black fade-in" />
                   )}
                 </div>
 
                 <button
                   onClick={saveEntry}
-                  className="w-full bg-white text-black py-3 rounded-lg hover:bg-gray-200 transition-all duration-300 font-semibold transform hover:scale-[1.02]"
+                  className="w-full bg-black text-white py-3 rounded-lg hover:bg-white hover:text-black border-2 border-black transition-all duration-300 font-semibold transform hover:scale-[1.02]"
                 >
                   Save Entry
                 </button>
@@ -444,7 +451,7 @@ export default function PhotoJournal() {
               {entries.map((entry, index) => (
                 <div 
                   key={entry.id} 
-                  className="bg-gradient-to-br from-gray-900 to-black rounded-lg border border-gray-800 overflow-hidden hover:border-gray-600 transition-all duration-300 transform hover:scale-[1.01] fade-in"
+                  className="bg-gray-200 rounded-lg border-2 border-black overflow-hidden hover:bg-white transition-all duration-300 transform hover:scale-[1.01] fade-in"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
                   {entry.photo && (
@@ -452,22 +459,22 @@ export default function PhotoJournal() {
                   )}
                   <div className="p-6">
                     <div className="flex justify-between items-start mb-3">
-                      <h3 className="text-2xl font-semibold text-white">{entry.title}</h3>
+                      <h3 className="text-2xl font-semibold text-black">{entry.title}</h3>
                       <div className="flex items-center gap-3">
                         {getMoodIcon(entry.mood)}
                         <button 
                           onClick={() => deleteEntry(entry.id)}
-                          className="text-gray-500 hover:text-red-400 transition-all duration-200 transform hover:scale-110"
+                          className="text-gray-600 hover:text-red-600 transition-all duration-200 transform hover:scale-110"
                         >
                           <X className="w-5 h-5" />
                         </button>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2 text-sm text-gray-500 mb-3">
+                    <div className="flex items-center gap-2 text-sm text-gray-600 mb-3">
                       <Calendar className="w-4 h-4" />
                       {formatDate(entry.date)}
                     </div>
-                    <p className="text-gray-300 whitespace-pre-wrap">{entry.content}</p>
+                    <p className="text-gray-800 whitespace-pre-wrap">{entry.content}</p>
                   </div>
                 </div>
               ))}
@@ -475,15 +482,15 @@ export default function PhotoJournal() {
 
             {entries.length === 0 && !showNewEntry && (
               <div className="text-center py-12 fade-in">
-                <Camera className="w-16 h-16 text-gray-700 mx-auto mb-4" />
-                <p className="text-gray-500 text-lg">No entries yet. Start journaling!</p>
+                <Camera className="w-16 h-16 text-gray-600 mx-auto mb-4" />
+                <p className="text-gray-700 text-lg">No entries yet. Start journaling!</p>
               </div>
             )}
           </>
         )}
 
         {view === 'calendar' && (
-          <div className="bg-gradient-to-br from-gray-900 to-black rounded-lg border border-gray-800 p-6 fade-in">
+          <div className="bg-gray-200 rounded-lg border-2 border-black p-6 fade-in hover:bg-white transition-all duration-300">
             {renderCalendar()}
           </div>
         )}
