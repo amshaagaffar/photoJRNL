@@ -317,7 +317,7 @@ export default function PhotoJournal() {
               <Cat className="w-8 h-8 text-white" />
             </div>
             <div>
-              <h1 className="text-5xl font-bold text-black mb-1 tracking-tight">My Journal</h1>
+              <h1 className="text-5xl font-bold text-black mb-1 tracking-tight">#myJRNL!</h1>
               <p className="text-gray-700">Capture your moments, one entry at a time</p>
             </div>
           </div>
